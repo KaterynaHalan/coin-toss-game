@@ -1,21 +1,12 @@
 import { LOGIN, LOGOUT } from "../constants/actionTypes";
 
-export const initialUser = {
-    token: null,
-    balance: 0
-}
-
-const loginReducer = (state = initialUser, action) => {
+const loginReducer = (state = { token: null }, action) => {
     switch (action.type) {
         case LOGIN:
-            return {
-                ...state,
-                token: action?.data?.token,
-                balance: action?.data?.balance
-            };
+            return { ...state, token: action.token };
 
         case LOGOUT:
-            return { ...state, ...initialUser };
+            return { ...state, token: null };
 
         default:
             return state;

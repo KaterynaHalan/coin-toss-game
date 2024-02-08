@@ -2,6 +2,13 @@ import { theme } from "../../themes/Default";
 import { deepPurple } from "@mui/material/colors";
 
 export const styles = {
+  paper: {
+    marginTop: theme.spacing(8),
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    padding: theme.spacing(2),
+  },
   appBar: {
     borderRadius: 15,
     margin: "30px 0",

@@ -1,8 +1,9 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "../../models/user.js";
+import tokensSet from "../tokens/tokens-set.js";
 
-const signup = async (req, res, next) => {
+const signup = async (req, res) => {
   const { email, password, confirmPassword, firstName, lastName } = req.body;
 
   try {
@@ -22,7 +23,7 @@ const signup = async (req, res, next) => {
       name: `${firstName} ${lastName}`,
     });
 
-    req.token = jwt.sign(
+    const token = jwt.sign(
         {
           _id: result._id,
           name: result.name,
@@ -33,9 +34,13 @@ const signup = async (req, res, next) => {
         { expiresIn: "1h" }
     );
 
-    req.userId = result._id;
+    const tokens = await tokensSet({ userId: result._id });
 
-    next();
+    if (tokens?.message) {
+      return res.status(400).json({ message: tokens.message });
+    }
+
+    res.status(200).json({ token, tokens });
   } catch (error) {
     res.status(500).json({ message: "Something went wrong" });
     console.log(error);

@@ -7,6 +7,7 @@ import * as actionType from "../../constants/actionTypes";
 import { styles } from "./styles";
 
 const Navbar = () => {
+  const balance = useSelector((state) => state.balance);
   const user = useSelector((state) => state.user);
   const decodedUser = useMemo(() => decodeUserInformation(user), [user]);
   const dispatch = useDispatch();
@@ -48,8 +49,8 @@ const Navbar = () => {
                 {decodedUser.name}
               </Typography>
               <Avatar sx={styles.gold}>$</Avatar>
-              <Typography sx={styles.balance} variant="h6">
-                Balance: {decodedUser.balance} tokens
+              <Typography sx={styles.tokens} variant="h6">
+                Balance: {balance.tokens} tokens
               </Typography>
             </div>
             <Button

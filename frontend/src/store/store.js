@@ -2,10 +2,10 @@ import {applyMiddleware, compose, createStore} from "redux";
 import {thunk} from "redux-thunk";
 import {STORE_KEY} from "../constants/constants";
 import reducers from "../reducers";
-import {initialUser} from "../reducers/login";
 
 export const initialState = {
-    user: initialUser
+    user: { token: null },
+    balance: { tokens: 0 }
 }
 
 /** Check the state in localStorage and set it as initial state if present */
