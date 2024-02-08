@@ -4,10 +4,9 @@ import {
     FormControlLabel, Radio, RadioGroup, TextField
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import PsychologyAltIcon from '@mui/icons-material/PsychologyAlt';
-import GestureIcon from '@mui/icons-material/Gesture';
 import { createToss } from "../../actions/toss";
 import { COIN_TYPE } from "../../constants/constants";
+import Coin from "../Coin/Coin";
 import { styles } from "./styles";
 
 const Game = () => {
@@ -19,8 +18,10 @@ const Game = () => {
     const [loading, setLoading] = useState(false);
 
     const handleChangeWager = useCallback((e) => {
-        if (e.target.value > 0 && e.target.value <= balance.tokens) {
+        if (e.target.value >= 0 && e.target.value <= balance.tokens) {
             setWager(e.target.value);
+        } else if (e.target.value > balance.tokens) {
+            setWager(balance.tokens);
         }
     }, [balance.tokens]);
 
@@ -30,9 +31,11 @@ const Game = () => {
 
     const handleSubmitChange = (e) => {
         e.preventDefault();
-        setLoading(true);
-        dispatch(createToss({ type: +coinType, wager: +wager }))
-            .then(() => setLoading(false));
+        if (!loading) {
+            setLoading(true);
+            dispatch(createToss({ type: +coinType, wager: +wager }))
+                .then(() => setLoading(false));
+        }
     };
 
     return (
@@ -55,9 +58,7 @@ const Game = () => {
                         </RadioGroup>
                     </FormControl>
 
-                    <div style={styles.coin}>
-                        {coinType === COIN_TYPE.Heads ? <PsychologyAltIcon /> : <GestureIcon />}
-                    </div>
+                    <Coin type={coinType} />
 
                     <TextField
                         name="wager"

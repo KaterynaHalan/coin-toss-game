@@ -1,11 +1,13 @@
 import React, { useMemo } from "react";
-import { Container, Grow, Paper, Typography } from "@mui/material";
-import { useSelector } from "react-redux";
+import { Button, Container, Grow, Paper, Typography } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
 import { decodeUserInformation } from "../../helpers/helpers";
+import { buyTokens } from "../../actions/balance";
 import Game from "../Game/Game";
 import { styles } from "./styles";
 
 const Home = () => {
+  const dispatch = useDispatch();
   const balance = useSelector((state) => state.balance);
   const user = useSelector((state) => state.user);
   const decodedUser = useMemo(() => decodeUserInformation(user), [user]);
@@ -33,9 +35,18 @@ const Home = () => {
                         <Game />
                     </>
                 ) : (
-                    <Typography variant="h6" mt={5} align="center" mb={5}>
-                        Looks like you do not have enough tokens to play :(
-                    </Typography>
+                    <>
+                        <Typography variant="h6" mt={5} align="center" mb={2}>
+                            Looks like you do not have enough tokens to play :(
+                        </Typography>
+                        <Button
+                            variant="contained"
+                            color="secondary"
+                            onClick={() => dispatch(buyTokens())}
+                        >
+                            Buy Tokens
+                        </Button>
+                    </>
                 )
             }
         </Paper>

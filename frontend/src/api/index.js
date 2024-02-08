@@ -1,5 +1,5 @@
 import axios from "axios";
-import {STORE_KEY} from "../constants/constants";
+import { STORE_KEY } from "../constants/constants";
 
 const API = axios.create({ baseURL: "http://localhost:5000" });
 API.interceptors.request.use((req) => {
@@ -17,3 +17,5 @@ export const changePassword = (formData) =>
   API.post("/api/user/changePassword", formData);
 
 export const createToss = (formData) => API.post("/api/toss/create", formData);
+export const getTosses = () => API.get("/api/toss/history");
+export const buyTokens = () => API.post("/api/tokens/buy");

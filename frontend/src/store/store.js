@@ -5,7 +5,8 @@ import reducers from "../reducers";
 
 export const initialState = {
     user: { token: null },
-    balance: { tokens: 0 }
+    balance: { tokens: 0 },
+    history: { tosses: [] }
 }
 
 /** Check the state in localStorage and set it as initial state if present */

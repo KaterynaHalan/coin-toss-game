@@ -25,13 +25,13 @@ const tossCreate = async (req, res) => {
         }
 
         /** Save the toss to have a history of previous tosses */
-        const result = await Toss.create({
+        const toss = await Toss.create({
             userId,
             type,
             wager,
             won,
         });
-        if (!result) {
+        if (!toss) {
             return res.status(400).json({ message: "Could not create your toss" });
         }
 
@@ -44,7 +44,7 @@ const tossCreate = async (req, res) => {
             return res.status(400).json({ message: newTokens.message });
         }
 
-        res.status(200).json({ result, tokens: newTokens });
+        res.status(200).json({ toss, tokens: newTokens });
     } catch (error) {
         res.status(500).json({ message: "Something went wrong when created toss" });
     }

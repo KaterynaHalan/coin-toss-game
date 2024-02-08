@@ -5,6 +5,6 @@ const tossSchema = mongoose.Schema({
     type: { type: Number, required: true },
     wager: { type: Number, required: true },
     won: { type: Number, required: true }
-});
+}, { timestamps: true });
 
 export default mongoose.model("Toss", tossSchema);
