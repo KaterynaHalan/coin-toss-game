@@ -1,8 +1,8 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import User from "../models/user.js";
+import User from "../../models/user.js";
 
-const login = async (req, res) => {
+const login = async (req, res, next) => {
   const { email, password } = req.body;
 
   try {
@@ -21,7 +21,7 @@ const login = async (req, res) => {
       return res.status(400).json({ message: "Invalid Password" });
     }
 
-    const token = jwt.sign(
+    req.token = jwt.sign(
       {
         _id: existingUser._id,
         name: existingUser.name,
@@ -32,7 +32,9 @@ const login = async (req, res) => {
       { expiresIn: "1h" }
     );
 
-    res.status(200).json({ token });
+    req.userId = existingUser._id;
+
+    next();
   } catch (error) {
     res.status(500).json({ message: "Something went wrong" });
   }

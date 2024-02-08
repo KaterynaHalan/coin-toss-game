@@ -1,0 +1,1 @@
+export const STORE_KEY = 'coin-toss-game';

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import {
   Avatar,
   Button,
@@ -11,21 +11,19 @@ import Input from "../Login/Input";
 import { styles } from "./styles";
 import LockIcon from "@mui/icons-material/LockRounded";
 import { changePassword } from "../../actions/login";
-import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { decodeUserInformation } from "../../helpers/helpers";
 
 const PasswordSetting = () => {
-  const user = localStorage.getItem("profile")
-    ? jwtDecode(JSON.parse(localStorage.getItem("profile")).token)
-    : "null";
-  const isSingedIn = user;
+  const user = useSelector((state) => state.user);
+  const decodedUser = useMemo(() => decodeUserInformation(user), [user]);
   const history = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [changeFormData, setChangeFormData] = useState({
     oldPassword: "",
     newPassword: "",
-    email: user.email,
+    email: decodedUser?.email,
   });
   const dispatch = useDispatch();
 
@@ -43,12 +41,12 @@ const PasswordSetting = () => {
   };
 
   useEffect(() => {
-    if (isSingedIn == "null" || isSingedIn === null) {
+    if (!decodedUser?.token) {
       history("/");
     }
   }, []);
 
-  if (isSingedIn !== "null" && isSingedIn !== null) {
+  if (decodedUser?.token) {
     return (
       <div>
         <Container component="main" maxWidth="xs">

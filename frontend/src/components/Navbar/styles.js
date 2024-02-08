@@ -1,6 +1,6 @@
 import { theme } from "../../themes/Default";
 
-import { deepPurple } from "@mui/material/colors";
+import { deepPurple, yellow } from "@mui/material/colors";
 
 export const styles = {
   appBar: {
@@ -23,12 +23,20 @@ export const styles = {
   },
   profile: {
     display: "flex",
-    justifyContent: "space-between",
-    width: "600px",
+    alignItems: "center"
+  },
+  logout: {
+    marginRight: "10px",
   },
   userName: {
     display: "flex",
     alignItems: "center",
+    margin: "0 10px"
+  },
+  balance: {
+    display: "flex",
+    alignItems: "center",
+    margin: "0 10px"
   },
   brandContainer: {
     display: "flex",
@@ -37,5 +45,9 @@ export const styles = {
   purple: {
     color: theme.palette.getContrastText(deepPurple[500]),
     backgroundColor: deepPurple[500],
+  },
+  gold: {
+    color: "white",
+    backgroundColor: yellow[800],
   },
 };
