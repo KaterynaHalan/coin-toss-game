@@ -2,6 +2,8 @@ import Toss from "../../models/toss.js";
 import flipCoin from "../../utils/flipCoin.js";
 import tokensSet from "../tokens/tokens-set.js";
 import tokensGet from "../tokens/tokens-get.js";
+import bonusGet from "../bonus/bonus-get.js";
+import bonusSet from "../bonus/bonus-set.js";
 
 const tossCreate = async (req, res) => {
     try {
@@ -17,12 +19,29 @@ const tossCreate = async (req, res) => {
             return res.status(400).json({ message: "Not enough tokens in your account" });
         }
 
-        /** Randomly flip a coin, check the win and calculate the amount of win */
+        let bonusStreak = await bonusGet({ userId });
+
+        /** Randomly flip a coin, check the win and calculate the win amount */
         const coinType = flipCoin();
         let won = 0;
         if (coinType === type) {
-            won = wager * 2;
+            bonusStreak++;
+            switch (bonusStreak) {
+                case 3:
+                    won = wager * 3;
+                    break;
+                case 5:
+                    won = wager * 10;
+                    break;
+                default:
+                    won = wager * 2;
+            }
+            if (bonusStreak >= 5) bonusStreak = 0;
+        } else if (bonusStreak) {
+            bonusStreak = 0;
         }
+
+        await bonusSet({ userId, streak: bonusStreak })
 
         /** Save the toss to have a history of previous tosses */
         const toss = await Toss.create({
