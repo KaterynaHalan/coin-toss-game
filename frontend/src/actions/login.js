@@ -10,7 +10,7 @@ export const signup = (formData, history) => async (dispatch) => {
     history("/");
     messages.success("Login Successful");
   } catch (error) {
-    messages.error(error.response.data.message);
+    messages.error(error.response?.data?.message || "Something went wrong");
   }
 };
 
@@ -22,7 +22,7 @@ export const login = (formData, history) => async (dispatch) => {
     history("/");
     messages.success("Login Successful");
   } catch (error) {
-    messages.error(error.response.data.message);
+    messages.error(error.response?.data?.message || "Something went wrong");
   }
 };
 
@@ -34,6 +34,6 @@ export const changePassword = (formData, history) => async (dispatch) => {
     messages.success("Password Change Was Successful");
     history("/");
   } catch (error) {
-    messages.error(error.response.data.message);
+    messages.error(error.response?.data?.message || "Something went wrong");
   }
 };

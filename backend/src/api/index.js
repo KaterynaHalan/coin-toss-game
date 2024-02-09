@@ -16,6 +16,7 @@ router.post("/user/changePassword", auth, changePassword);
 router.post("/toss/create", auth, tossCreate);
 router.get("/toss/history", auth, tossHistory);
 
+/** For a user to be able to "buy" tokens when run out of them */
 router.post("/tokens/buy", auth, tokensBuy);
 
 export default router;

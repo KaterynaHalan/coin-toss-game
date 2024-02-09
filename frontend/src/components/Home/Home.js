@@ -17,38 +17,39 @@ const Home = () => {
       <Container component="main" maxWidth="sm">
         <Paper sx={styles.paper} elevation={3}>
             {decodedUser?.token ? (
-                <Typography variant="h4" align="center" color="primary">
-                  {`Welcome ${decodedUser.name}`}
-                </Typography>
+                <>
+                  <Typography variant="h4" align="center" color="primary">
+                    {`Welcome ${decodedUser.name}`}
+                  </Typography>
+                  {
+                    balance.tokens > 0 ? (
+                        <>
+                          <Typography variant="h5" mb={5}>
+                            Let's play the game!
+                          </Typography>
+                          <Game />
+                        </>
+                    ) : (
+                        <>
+                          <Typography variant="h6" mt={5} align="center" mb={2}>
+                            Looks like you do not have enough tokens to play :(
+                          </Typography>
+                          <Button
+                              variant="contained"
+                              color="secondary"
+                              onClick={() => dispatch(buyTokens())}
+                          >
+                            Buy Tokens
+                          </Button>
+                        </>
+                    )
+                  }
+                </>
             ) : (
                 <Typography variant="h4" align="center" color="primary">
                   Login to Play
                 </Typography>
             )}
-
-            {
-                balance.tokens > 0 ? (
-                    <>
-                        <Typography variant="h5" mb={5}>
-                            Let's play the game!
-                        </Typography>
-                        <Game />
-                    </>
-                ) : (
-                    <>
-                        <Typography variant="h6" mt={5} align="center" mb={2}>
-                            Looks like you do not have enough tokens to play :(
-                        </Typography>
-                        <Button
-                            variant="contained"
-                            color="secondary"
-                            onClick={() => dispatch(buyTokens())}
-                        >
-                            Buy Tokens
-                        </Button>
-                    </>
-                )
-            }
         </Paper>
       </Container>
     </Grow>

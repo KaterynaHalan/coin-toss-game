@@ -21,7 +21,7 @@ const tossCreate = async (req, res) => {
 
         let bonusStreak = await bonusGet({ userId });
 
-        /** Randomly flip a coin, check the win and calculate the win amount */
+        /** Randomly flip a coin and calculate the win amount */
         const coinType = flipCoin();
         let won = 0;
         if (coinType === type) {

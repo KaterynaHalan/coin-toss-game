@@ -1,7 +1,3 @@
-import { theme } from "../../themes/Default";
-
-import { deepPurple, yellow } from "@mui/material/colors";
-
 export const styles = {
     appBar: {
         borderRadius: 1,

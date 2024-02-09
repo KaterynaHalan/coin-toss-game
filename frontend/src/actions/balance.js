@@ -8,6 +8,6 @@ export const buyTokens = () => async (dispatch) => {
         dispatch({ type: SET_TOKENS, tokens });
         messages.success("Tokens were bought successfully");
     } catch (error) {
-        messages.error(error.response.data.message);
+        messages.error(error.response?.data?.message || "Something went wrong");
     }
 };

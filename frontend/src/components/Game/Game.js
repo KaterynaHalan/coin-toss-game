@@ -15,9 +15,11 @@ const Game = () => {
 
     const [wager, setWager] = useState(0);
     const [coinType, setCoinType] = useState(COIN_TYPE.Heads);
+
     const [loading, setLoading] = useState(false);
 
     const handleChangeWager = useCallback((e) => {
+        /** The wager field amount cannot be more than tokens balance or less than 0 */
         if (e.target.value >= 0 && e.target.value <= balance.tokens) {
             setWager(e.target.value);
         } else if (e.target.value > balance.tokens) {
